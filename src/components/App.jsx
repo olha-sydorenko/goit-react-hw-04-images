@@ -6,7 +6,7 @@ import { Button } from './Button/Button';
 export class App extends React.Component {
   state = {
     query: '',
-    images: null,
+    images: [],
     isLoading: false,
     error: '',
     page: 1,
@@ -19,16 +19,26 @@ export class App extends React.Component {
   async componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
     try {
-      const data = await fetchImages(query);
+      // this.setState({ isLoading: true });
+      const data = await fetchImages(query, page);
 
-      if (prevState.query !== query) {
-        this.setState({ images: data.hits });
-        console.log(this.stae.images);
+      if (prevState.query !== query || prevState.page !== page) {
+        // this.setState({ images: data.hits });
+        // console.log(this.state.images);
+        this.setState(prevState => ({
+          images: [...prevState.images, ...data.hits],
+        }));
       }
     } catch (error) {
       this.setState({ error: error.message });
+    } finally {
+      // this.setState({ isLoading: false });
     }
   }
+
+  handleBtnClick = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
 
   // async componentDidMount() {
   //   const { query } = this.state;
@@ -53,7 +63,7 @@ export class App extends React.Component {
             </li>
           ))}
         </ul> */}
-        <Button />
+        <Button onClick={this.handleBtnClick} />
       </div>
     );
   }
