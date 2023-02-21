@@ -6,7 +6,7 @@ import { Button } from './Button/Button';
 export class App extends React.Component {
   state = {
     query: '',
-    images: [],
+    images: null,
     isLoading: false,
     error: '',
     page: 1,
