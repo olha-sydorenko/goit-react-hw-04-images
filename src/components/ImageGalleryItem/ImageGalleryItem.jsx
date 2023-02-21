@@ -1,11 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export class ImageGalleryItem extends React.Component {
-  render() {
-    return (
-      <li class="gallery-item">
-        <img src="" alt="" />
-      </li>
-    );
-  }
-}
+export const ImageGalleryItem = ({ webformatURL, tags, id }) => {
+  return (
+    <li key={id} className="gallery-item">
+      <img src={webformatURL} alt={tags} />
+    </li>
+  );
+};
+
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+};
