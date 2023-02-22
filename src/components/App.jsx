@@ -13,6 +13,8 @@ export class App extends React.Component {
     isLoading: false,
     error: '',
     page: 1,
+    perPage: 12,
+    totalHits: 0,
   };
 
   handleSubmit = query => {
@@ -28,7 +30,10 @@ export class App extends React.Component {
         this.setState({ isLoading: true });
         this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
+          totalHits: data.totalHits,
         }));
+        console.log(this.state);
+        console.log(data);
       }
     } catch (error) {
       this.setState({ error: error.message });
@@ -52,12 +57,14 @@ export class App extends React.Component {
   // }
 
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, totalHits, perPage } = this.state;
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} />
         <ImageGallery images={images} />
-        {images !== [] && <Button onClick={this.handleBtnClick} />}
+        {Math.floor(totalHits / perPage) && (
+          <Button onClick={this.handleBtnClick} />
+        )}
         {isLoading && <Loader />}
       </Container>
     );
