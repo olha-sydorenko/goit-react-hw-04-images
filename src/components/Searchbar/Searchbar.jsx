@@ -23,7 +23,7 @@ export class Searchbar extends React.Component {
   handleFormSubmit = event => {
     event.preventDefault();
     this.props.onSubmit(this.state.query);
-    this.setState({ query: '', images: [] });
+    this.setState({ query: '' });
   };
 
   render() {

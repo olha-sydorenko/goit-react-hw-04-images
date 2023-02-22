@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Overlay, StyledModal } from './Modal.styled';
 export class Modal extends React.Component {
   onEscapePress = event => {
@@ -31,3 +32,9 @@ export class Modal extends React.Component {
     );
   }
 }
+
+Modal.propTypes = {
+  largeImageURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+};

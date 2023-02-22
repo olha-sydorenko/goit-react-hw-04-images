@@ -18,7 +18,7 @@ export const ImageGallery = ({ images }) => {
   );
 };
 
-ImageGallery.propTyoes = {
+ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.number.isRequired,
