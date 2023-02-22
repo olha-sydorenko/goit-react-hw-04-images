@@ -16,7 +16,7 @@ export class App extends React.Component {
   };
 
   handleSubmit = query => {
-    this.setState({ query });
+    this.setState({ query, images: [] });
   };
 
   async componentDidUpdate(_, prevState) {
