@@ -62,9 +62,7 @@ export class App extends React.Component {
       <Container>
         <Searchbar onSubmit={this.handleSubmit} />
         <ImageGallery images={images} />
-        {Math.floor(totalHits / perPage) && (
-          <Button onClick={this.handleBtnClick} />
-        )}
+        {images.length > 0 && <Button onClick={this.handleBtnClick} />}
         {isLoading && <Loader />}
       </Container>
     );
