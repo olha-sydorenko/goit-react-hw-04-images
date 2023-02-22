@@ -21,21 +21,21 @@ export class App extends React.Component {
 
   async componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
-    try {
-      const data = await fetchImages(query, page);
 
-      if (prevState.query !== query || prevState.page !== page) {
-        this.setState({ isLoading: true });
-        this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
-          totalHits: data.totalHits,
-        }));
+    if (prevState.query !== query || prevState.page !== page)
+      try {
+        const data = await fetchImages(query, page);
+        {
+          this.setState({ isLoading: true });
+          this.setState(prevState => ({
+            images: [...prevState.images, ...data.hits],
+          }));
+        }
+      } catch (error) {
+        this.setState({ error: error.message });
+      } finally {
+        this.setState({ isLoading: false });
       }
-    } catch (error) {
-      this.setState({ error: error.message });
-    } finally {
-      this.setState({ isLoading: false });
-    }
   }
 
   handleBtnClick = () => {
