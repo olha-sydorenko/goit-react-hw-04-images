@@ -1,10 +1,11 @@
 import React from 'react';
+import { StyledGallery } from './ImageGallery.styled';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import PropTypes from 'prop-types';
 
 export const ImageGallery = ({ images }) => {
   return (
-    <ul>
+    <StyledGallery>
       {images?.map(({ id, webformatURL, largeImageURL, tags }) => (
         <ImageGalleryItem
           key={id}
@@ -13,7 +14,7 @@ export const ImageGallery = ({ images }) => {
           tags={tags}
         />
       ))}
-    </ul>
+    </StyledGallery>
   );
 };
 

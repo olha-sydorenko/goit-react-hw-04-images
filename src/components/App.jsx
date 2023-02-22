@@ -3,6 +3,9 @@ import React from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
+import { Loader } from './Loader/Loader';
+import { Container } from './App.styled';
+
 export class App extends React.Component {
   state = {
     query: '',
@@ -19,12 +22,10 @@ export class App extends React.Component {
   async componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
     try {
-      // this.setState({ isLoading: true });
       const data = await fetchImages(query, page);
 
       if (prevState.query !== query || prevState.page !== page) {
-        // this.setState({ images: data.hits });
-        // console.log(this.state.images);
+        this.setState({ isLoading: true });
         this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
         }));
@@ -32,7 +33,7 @@ export class App extends React.Component {
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
-      // this.setState({ isLoading: false });
+      this.setState({ isLoading: false });
     }
   }
 
@@ -51,20 +52,14 @@ export class App extends React.Component {
   // }
 
   render() {
-    const { images } = this.state;
+    const { images, isLoading } = this.state;
     return (
-      <div>
+      <Container>
         <Searchbar onSubmit={this.handleSubmit} />
-        <ImageGallery images={this.state.images} />
-        {/* <ul>
-          {images.map(({ id, webformatURL, tags }) => (
-            <li key={id}>
-              <img src={webformatURL} alt={tags} />
-            </li>
-          ))}
-        </ul> */}
-        <Button onClick={this.handleBtnClick} />
-      </div>
+        <ImageGallery images={images} />
+        {images !== [] && <Button onClick={this.handleBtnClick} />}
+        {isLoading && <Loader />}
+      </Container>
     );
   }
 }
