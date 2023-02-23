@@ -1,5 +1,7 @@
-import { fetchImages } from './fetchImages';
 import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import { fetchImages } from './fetchImages';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
@@ -17,7 +19,6 @@ export const App = () => {
   const [query, setQuery] = useState('');
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const [page, setPage] = useState(1);
 
   const handleSubmit = query => {
@@ -26,26 +27,7 @@ export const App = () => {
     setPage(1);
   };
 
-  // async componentDidUpdate(_, prevState) {
-  //   const { query, page } = this.state;
-
-  //   if (prevState.query !== query || prevState.page !== page)
-  //     try {
-  //       const data = await fetchImages(query, page);
-
-  //       this.setState({ isLoading: true });
-  //       this.setState(prevState => ({
-  //         images: [...prevState.images, ...data.hits],
-  //       }));
-  //     } catch (error) {
-  //       this.setState({ error: error.message });
-  //     } finally {
-  //       this.setState({ isLoading: false });
-  //     }
-  // }
-
   useEffect(() => {
-    // if (prevState.query !== query || prevState.page !== page) {
     if (!query) return;
     const getImages = async () => {
       try {
@@ -53,7 +35,16 @@ export const App = () => {
         const data = await fetchImages(query, page);
         setImages(prevState => [...prevState, ...data.hits]);
       } catch (error) {
-        setError(error.message);
+        toast.error("Oops! Something's gone wrong! 😿", {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
       } finally {
         setIsLoading(false);
       }
@@ -65,13 +56,13 @@ export const App = () => {
     setPage(prevState => prevState + 1);
   };
 
-  // const { images, isLoading } = this.state;
   return (
     <Container>
       <Searchbar onSubmit={handleSubmit} />
       <ImageGallery images={images} />
       {images.length > 0 && <Button onClick={handleBtnClick} />}
       {isLoading && <Loader />}
+      <ToastContainer />
     </Container>
   );
 };

@@ -8,21 +8,13 @@ export const Modal = props => {
     }
   };
 
-  // componentDidMount() {
-  //   window.addEventListener('keydown', this.onEscapePress);
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('keydown', this.onEscapePress);
-  // }
-
   useEffect(() => {
     window.addEventListener('keydown', onEscapePress);
 
     return () => {
       window.removeEventListener('keydown', onEscapePress);
     };
-  }, []);
+  }, [onEscapePress]);
 
   const handleClick = event => {
     if (event.target !== event.currentTarget) {
