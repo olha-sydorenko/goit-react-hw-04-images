@@ -25,12 +25,11 @@ export class App extends React.Component {
     if (prevState.query !== query || prevState.page !== page)
       try {
         const data = await fetchImages(query, page);
-        {
-          this.setState({ isLoading: true });
-          this.setState(prevState => ({
-            images: [...prevState.images, ...data.hits],
-          }));
-        }
+
+        this.setState({ isLoading: true });
+        this.setState(prevState => ({
+          images: [...prevState.images, ...data.hits],
+        }));
       } catch (error) {
         this.setState({ error: error.message });
       } finally {
