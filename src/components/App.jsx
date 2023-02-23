@@ -23,6 +23,7 @@ export const App = () => {
   const handleSubmit = query => {
     setQuery(query);
     setImages([]);
+    setPage(1);
   };
 
   // async componentDidUpdate(_, prevState) {
