@@ -2,19 +2,17 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Overlay, StyledModal } from './Modal.styled';
 export const Modal = props => {
-  const onEscapePress = event => {
-    if (event.code === 'Escape') {
-      props.closeModal();
-    }
-  };
-
   useEffect(() => {
+    const onEscapePress = event => {
+      if (event.code === 'Escape') {
+        props.closeModal();
+      }
+    };
     window.addEventListener('keydown', onEscapePress);
-
     return () => {
       window.removeEventListener('keydown', onEscapePress);
     };
-  }, [onEscapePress]);
+  }, [props]);
 
   const handleClick = event => {
     if (event.target !== event.currentTarget) {
